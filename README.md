@@ -23,7 +23,7 @@
 - `mkdir NomeDaPasta`  
   Crie uma nova pasta.
 - `npm init -y`  
-  Inicie o projeto JavaScript com `npm init -y`.
+  Inicie o projeto JavaScript com configurações padrão.
 - `code .`  
   Abra a pasta atual no VS Code.
 
