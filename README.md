@@ -23,7 +23,7 @@
 - `mkdir NomeDaPasta`  
   Crie uma nova pasta.
 - `npm init -y`  
-  Inicie o projeto JavaScript com `package.json`.
+  Inicie o projeto JavaScript com `npm init -y`.
 - `code .`  
   Abra a pasta atual no VS Code.
 
