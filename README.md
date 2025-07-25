@@ -1,44 +1,8 @@
-# Projeto Ecoleta (Web/Mobile)
+# 🌱 NWL01 - Trilha Omnistack (Booster)
 
-## Aula 01
-- Inicie a prática com **Node**, **React** e **React Native**.
-- Conheça o projeto Ecoleta (web/mobile):  
-  - Entenda APIs RESTful (JSON) e **TypeScript**.
-- Configure o ambiente:  
-  - **Node.js**  
-  - **npm**  
-  - **VS Code**
-- Crie seus primeiros “Hello World” em:  
-  - **Node.js** (Express)  
-  - **React.js**
-- Entenda o **Expo** para desenvolvimento mobile simplificado.
+Inicie a prática com **Node.js**, **React** e **React Native**.  
+Conheça o projeto **Ecoleta (web/mobile)**, entenda conceitos como **APIs RESTful (JSON)** e **TypeScript**.  
+Configure o ambiente com **Node**, **npm** e **VS Code**, e crie seus primeiros “Hello World” com **Node.js (Express)** e **React.js**.  
+Entenda também o **Expo**, utilizado para desenvolvimento mobile de forma simplificada.
 
 ---
-
-## 🤖 Terminal
-- `cd NomeDaPasta`  
-  Abra uma pasta no terminal.
-- `ls`  
-  Liste o conteúdo da pasta.
-- `mkdir NomeDaPasta`  
-  Crie uma nova pasta.
-- `npm init -y`  
-  Inicie o projeto JavaScript com configurações padrão.
-- `code .`  
-  Abra a pasta atual no VS Code.
-
----
-
-## 🤖 Terminal no VS Code
-- `npm install express`  
-  Instale o Express (necessário para todo início de projeto backend).
-- `npm install react`  
-  Instale o React (para projetos frontend).
-
-
-
-
-
-
-
-
