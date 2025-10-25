@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./styles.css";
 import logo from "../../assets/logo.svg";
 
@@ -7,9 +7,26 @@ import { FiArrowLeft } from "react-icons/fi";
 
 import { MapContainer as RLMapContainer, TileLayer, Marker } from "react-leaflet";
 
+import api from "../../services/api";
+
+
 const center = [-25.4405967, -49.213212] as [number, number]
 
+interface Item {
+    id: number;
+    title: string;
+    image_url: string;
+}
+
 const CreatePoint = () => {
+    const [ items, setItems ] = useState<Item[]>([]);
+    
+    useEffect (() => {
+        api.get('items').then(response =>{
+            setItems( response.data );
+        });
+    }, []);
+
     return (
         <div id="page-create-point">
 
@@ -64,9 +81,12 @@ const CreatePoint = () => {
                         <span>Selecione o endereço no mapa</span>
                     </legend>
 
-                    <RLMapContainer >
+                    <RLMapContainer 
+                        center={center}             
+                        zoom={15}        
+                        >
                         <TileLayer
-                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         />
                         <Marker position={center} />
                     </RLMapContainer>
@@ -93,31 +113,14 @@ const CreatePoint = () => {
                         <span>Selecione um ou mais ítens abaixo</span>
                     </legend>
                     <ul className="items-grid">
-                        <li>
-                            <img src="" alt="" />
+                        {items.map( item => (
+                            <li key={item.id}>
+                            <img src={item.image_url} alt={item.title} />
+                            <span>{item.title}</span>
                             <span></span>
                         </li>
-                        <li>
-                            <img src="" alt="" />
-                            <span></span>
-                        </li>
-                        <li>
-                            <img src="" alt="" />
-                            <span></span>
-                        </li>
-                        <li>
-                            <img src="" alt="" />
-                            <span></span>
-                        </li>
-                        <li>
-                            <img src="" alt="" />
-                            <span></span>
-                        </li>
-                        <li>
-                            <img src="" alt="" />
-                            <span></span>
-                        </li>
-                        
+                        ))}
+                       
                     </ul>
                 </fieldset>
 
