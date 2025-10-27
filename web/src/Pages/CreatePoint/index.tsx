@@ -2,11 +2,12 @@ import React, { useEffect, useState, ChangeEvent } from "react";
 import "./styles.css";
 import logo from "../../assets/logo.svg";
 import axios from "axios";
+import { LeafletMouseEvent } from "leaflet";
 
 import { Link } from "react-router-dom";
 import { FiArrowLeft } from "react-icons/fi";
 
-import { MapContainer as RLMapContainer, TileLayer, Marker } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
 
 import api from "../../services/api";
 
@@ -33,6 +34,7 @@ const CreatePoint = () => {
 
     const [selectedCity, setSelectedCity] = useState("0")
     const [selectedUF, setSelectedUF] = useState('0');
+    const [selectedPosition, setSelectedPosition] = useState<[number, number]> ([0, 0]);
     
     useEffect (() => {
         api.get('items').then(response =>{
@@ -61,6 +63,13 @@ const CreatePoint = () => {
         });
     }, [selectedUF]);
 
+    function handleMapClick(event: LeafletMouseEvent) {
+        setSelectedPosition ([
+            event.latlng.lat,
+            event.latlng.lng,
+        ])
+    }
+
 
     function handleSelectedUF(event: ChangeEvent<HTMLSelectElement>) {
         const uf = event.target.value;
@@ -73,6 +82,14 @@ const CreatePoint = () => {
 
         setSelectedCity(city);
     }
+
+    function MapClick({ onClick }: { onClick: (e: LeafletMouseEvent) => void }) {
+    useMapEvents({
+        click: (e) => onClick(e),
+    });
+    return null; // não renderiza nada
+    }
+
 
     return (
         <div id="page-create-point">
@@ -128,15 +145,16 @@ const CreatePoint = () => {
                         <span>Selecione o endereço no mapa</span>
                     </legend>
 
-                    <RLMapContainer 
+                    <MapContainer 
                         center={center}             
-                        zoom={15}        
+                        zoom={15}  
                         >
+                        <MapClick onClick={handleMapClick} />
                         <TileLayer
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         />
-                        <Marker position={center} />
-                    </RLMapContainer>
+                        <Marker position={selectedPosition} />
+                    </MapContainer>
 
                 <div className="field-group">
                     <div className="field">
