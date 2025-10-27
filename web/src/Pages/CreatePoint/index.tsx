@@ -31,6 +31,7 @@ const CreatePoint = () => {
     const [ufs, setUfs] = useState<string[]>([]);
     const [cities, setCities] = useState<string[]>([]);
 
+    const [selectedCity, setSelectedCity] = useState("0")
     const [selectedUF, setSelectedUF] = useState('0');
     
     useEffect (() => {
@@ -50,6 +51,7 @@ const CreatePoint = () => {
     useEffect (() => {
         if (selectedUF === "0") {
             setCities([]);
+            setSelectedCity("0");
             return;
         }
         axios.get<IBGECityResponse []>(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${selectedUF}/municipios`).then(response => {
@@ -57,12 +59,19 @@ const CreatePoint = () => {
 
            setCities(CityNames);
         });
-    }, []);
+    }, [selectedUF]);
+
 
     function handleSelectedUF(event: ChangeEvent<HTMLSelectElement>) {
         const uf = event.target.value;
 
         setSelectedUF(uf);
+    }
+
+    function handleSelectedCity(event: ChangeEvent<HTMLSelectElement>) {
+        const city = event.target.value;
+
+        setSelectedCity(city);
     }
 
     return (
@@ -141,7 +150,7 @@ const CreatePoint = () => {
                     </div>
                     <div className="field">
                         <label htmlFor="city">Cidade</label>
-                        <select name="city" id="city">
+                        <select name="city" id="city" value={selectedCity} onChange={handleSelectedCity}>
                             <option value="0">Selecione uma cidade</option>
                             {cities.map(city=> (
                                <option key={city} value={city}>{city}</option> 
