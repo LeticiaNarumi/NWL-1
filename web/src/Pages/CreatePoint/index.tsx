@@ -32,9 +32,26 @@ const CreatePoint = () => {
     const [ufs, setUfs] = useState<string[]>([]);
     const [cities, setCities] = useState<string[]>([]);
 
+    const [ initialPosition, setInitialPosition ] = useState<[number, number] | null>(null);
+
     const [selectedCity, setSelectedCity] = useState("0")
     const [selectedUF, setSelectedUF] = useState('0');
     const [selectedPosition, setSelectedPosition] = useState<[number, number]> ([0, 0]);
+
+    useEffect (() => {
+        navigator.geolocation.getCurrentPosition(position => {
+            const {latitude, longitude} = position.coords
+
+            setInitialPosition([latitude, longitude]);
+            setSelectedPosition([latitude, longitude]);
+        },
+        () => {
+            const fallback: [number, number] = [-25.44, -49.21]; 
+            setInitialPosition(fallback);
+            setSelectedPosition(fallback);
+        }
+    );
+    }, []);
     
     useEffect (() => {
         api.get('items').then(response =>{
@@ -145,8 +162,10 @@ const CreatePoint = () => {
                         <span>Selecione o endereço no mapa</span>
                     </legend>
 
-                    <MapContainer 
-                        center={center}             
+                    {initialPosition && (
+                    <MapContainer
+                        key={initialPosition.join(",")}
+                        center={initialPosition}             
                         zoom={15}  
                         >
                         <MapClick onClick={handleMapClick} />
@@ -155,6 +174,8 @@ const CreatePoint = () => {
                         />
                         <Marker position={selectedPosition} />
                     </MapContainer>
+                    )}
+                    {!initialPosition && <p>Carregando mapa...</p>}
 
                 <div className="field-group">
                     <div className="field">
